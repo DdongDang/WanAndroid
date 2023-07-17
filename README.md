@@ -1,7 +1,8 @@
 # WanAndroid
-##项目环境
--Android Studio Flamingo | 2022.2.1 Patch 2
-Project build.gradel:
+## 项目环境
+* Android Studio Flamingo | 2022.2.1 Patch 2
+* Project build.gradle:
+```
 plugins {
     id 'com.android.application' version '8.0.2' apply false
     id 'com.android.library' version '8.0.2' apply false
@@ -15,4 +16,5 @@ Module build.gradel:
     kotlinOptions {
         jvmTarget = '1.8'
     }
+```
 
