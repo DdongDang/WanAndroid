@@ -14,7 +14,7 @@ import com.wan.mvp.inter.view.AuthView
  * @Date: 2023/7/17 15:58
  * @Description:Presenter层的实现，持有View层引用更新UI，持有Model层引用请求数据
  */
-class AuthPresenterImpl(var authView: AuthView?) : AuthPresenter, AuthPresenter.AuthCallback ,IBasePresenter{
+class AuthPresenterImpl(var authView: AuthView?) : AuthPresenter, AuthPresenter.AuthCallback {
     private val authModel: AuthModel = AuthModelImpl()
     override fun loginAction(context: Context, username: String, password: String) {
         authModel.login(context, username, password, this)

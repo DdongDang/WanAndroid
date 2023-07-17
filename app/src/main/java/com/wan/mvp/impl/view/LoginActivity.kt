@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wan.R
 import com.wan.entity.User
 import com.wan.mvp.impl.presenter.AuthPresenterImpl
+import com.wan.mvp.inter.BaseActivity
 import com.wan.mvp.inter.presenter.AuthPresenter
 import com.wan.mvp.inter.view.AuthView
 
@@ -19,17 +20,18 @@ import com.wan.mvp.inter.view.AuthView
  */
 private const val TAG = "LoginActivity"
 
-class LoginActivity : AppCompatActivity(), AuthView {
-    var authPresenter: AuthPresenter? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        authPresenter = AuthPresenterImpl(this)
-        initView()
+class LoginActivity : BaseActivity<AuthPresenter>(), AuthView {
 
-    }
+    override val layoutRes: Int
+        get() = R.layout.activity_login
 
-    private fun initView() {
+    override fun createP(): AuthPresenter = AuthPresenterImpl(this)
+
+    override fun recycleP() = presenter.unAttachView()
+
+
+    override fun initView() {
+        Log.d(TAG, "initView: ")
         var userNameEd = findViewById<EditText>(R.id.editTextPhone)
         var pwdEd = findViewById<EditText>(R.id.editTextTextPassword)
         var loginBtn = findViewById<Button>(R.id.loginBtn)
@@ -37,7 +39,7 @@ class LoginActivity : AppCompatActivity(), AuthView {
             val username = userNameEd.text.toString()
             val pwd = pwdEd.text.toString()
             Log.d(TAG, "initView-setOnClickListener: $username --  $pwd")
-            authPresenter?.loginAction(this@LoginActivity, username, pwd)
+            presenter?.loginAction(this@LoginActivity, username, pwd)
         }
     }
 
