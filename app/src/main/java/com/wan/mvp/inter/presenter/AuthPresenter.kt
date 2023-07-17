@@ -12,7 +12,7 @@ interface AuthPresenter {
     fun loginAction(context: Context, username: String, password: String)
 
     interface AuthCallback {
-        fun loginFailCallBack(data: User)
-        fun loginSuccessCallBack(msg: String)
+        fun loginSuccessCallBack(data: User)
+        fun loginFailCallBack(msg: String)
     }
 }
