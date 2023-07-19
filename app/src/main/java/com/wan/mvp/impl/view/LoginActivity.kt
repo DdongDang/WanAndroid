@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.wan.R
+import com.wan.database.Student
+import com.wan.database.WanDatabase
 import com.wan.entity.User
 import com.wan.mvp.impl.presenter.AuthPresenterImpl
 import com.wan.mvp.inter.BaseActivity
@@ -41,6 +43,29 @@ class LoginActivity : BaseActivity<AuthPresenter>(), AuthView {
             Log.d(TAG, "initView-setOnClickListener: $username --  $pwd")
             presenter?.loginAction(this@LoginActivity, username, pwd)
         }
+        showRoom()
+    }
+
+    private fun showRoom() {
+        Thread{
+            Log.d(TAG, "showRoom: ")
+            //先插入五个Student
+            var i = 0
+            val studentDao = WanDatabase.instance()?.studentDao()
+            studentDao?.deleteAllStudent()
+            while (i<5){
+                studentDao?.insertStudent(Student("小$i",i*10) )
+                i++
+            }
+            //再查询所有Student
+            val students = studentDao?.queryAllStudent()
+            students?.let {
+                for(student in it){
+                    Log.d(TAG, "本地数据库查询到的数据==${student.toString()}")
+                }
+            }
+        }.start()
+
     }
 
     override fun loginSuccess(data: User) {
